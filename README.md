@@ -18,6 +18,7 @@ Lista de todas as Tecnologias usadas no backend:
 - Spring
 - Módulos do spring:
     - Spring Web
+    - Spring Dev Tools
     - Spring Data JPA
     - Spring Security
     - Validation
