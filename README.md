@@ -21,6 +21,7 @@ Lista de todas as Tecnologias usadas no backend:
     - Spring Dev Tools
     - Spring Data JPA
     - Spring Security
+    - Java JWT
     - Validation
     - Loombok
 - Maven
