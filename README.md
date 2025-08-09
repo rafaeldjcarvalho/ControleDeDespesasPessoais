@@ -121,35 +121,77 @@ Aqui está a lista das principais rotas da API e o que elas fazem.
 ```
 
 
-- TransactionController
+- Módulo de Categorias
 
 
 | route               | description                                          
 |----------------------|-----------------------------------------------------
-| <kbd>POST /transaction</kbd>     | Criar transação, ver [request details](#post-transaction-detail)
+| <kbd>POST /api/categorias</kbd>     | Criar nova categoria, ver [request details](#post-category-detail)
+| <kbd>GET /api/categorias/{id_usuario}</kbd>     | Recupera as categorias, ver [response details](#get-category-detail)
+| <kbd>PUT /api/categorias/{id}</kbd>     | Atualiza uma categoria, ver [request details](#put-category-detail)
+| <kbd>DELETE /api/categorias</kbd>     | Deleta uma categoria, ver [request details](#delete-category-detail)
 
-<h3 id="post-flight-detail">POST /transaction</h3>
+<h3 id="post-category-detail">POST /categorias</h3>
 
 **REQUEST**
 ```json
 {
-  "valor": 50,
-  "remetente": 1,
-  "destinatario": 2
+    "nome": "Comida",
+    "descricao": "fast food",
+    "id_usuario": 1
+}
+```
+
+<h3 id="get-category-detail">GET /categorias/{id_usuario}</h3>
+
+**RESPONSE**
+```json
+[
+    {
+        "id": 1,
+        "nome": "Comida",
+        "descricao": "fast food",
+        "id_usuario": 1
+    },
+    {
+        "id": 2,
+        "nome": "Transporte",
+        "descricao": "Carro",
+        "id_usuario": 1
+    }
+]
+```
+
+<h3 id="put-category-detail">PUT /categorias/{id}</h3>
+
+**REQUEST**
+```json
+{
+    "nome": "Cinema",
+    "descricao": "Filme e Pipoca",
+    "id_usuario": 1
 }
 ```
 
 **RESPONSE**
 ```json
 {
-  "id": 1,
-  "valor": 50,
-  "remetente": 1,
-  "destinatario": 2,
-  "dataHora": "07/31/2025T13:48:10"
+    "id": 2,
+    "nome": "Cinema",
+    "descricao": "Filme e Pipoca",
+    "id_usuario": 1
 }
 ```
 
+<h3 id="delete-category-detail">DELETE /categorias</h3>
+
+**REQUEST**
+```json
+{
+    "id": 2,
+    "id_usuario": 1
+}
+```
 
 Fluxo Resumido
 
