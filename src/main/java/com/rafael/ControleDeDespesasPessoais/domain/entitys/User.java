@@ -2,6 +2,8 @@ package com.rafael.ControleDeDespesasPessoais.domain.entitys;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.rafael.ControleDeDespesasPessoais.domain.dtos.RegisterDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -42,5 +44,10 @@ public class User {
 	@NotBlank
 	@NotEmpty
 	private String senha;
+	
+	public User(RegisterDTO dados) {
+		this.setNome(dados.nome());
+		this.setEmail(dados.email());
+	}
 	
 }
