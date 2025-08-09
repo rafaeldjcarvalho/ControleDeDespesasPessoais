@@ -83,7 +83,7 @@ Aqui está a lista das principais rotas da API e o que elas fazem.
 | <kbd>POST /api/auth/login</kbd>     | Autentica um usuário, ver [request details](#post-user-login)
 
 
-<h3 id="get-user-register">POST /registrar</h3>
+<h3 id="post-user-register">POST /registrar</h3>
 
 **REQUEST**
 ```json
