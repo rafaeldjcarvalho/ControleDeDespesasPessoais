@@ -35,8 +35,8 @@ public class SecurityConfig {
             .headers(headers -> headers.frameOptions().disable()) // permite H2 rodar em frames
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/auth/registrar").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated()
             )
