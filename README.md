@@ -74,60 +74,49 @@ git clone https://github.com/rafaeldjcarvalho/ControleDeDespesasPessoais
 
 Aqui está a lista das principais rotas da API e o que elas fazem.
 
-- UserController
+- Módulo de Autenticação
 
 
 | route               | description                                          
 |----------------------|-----------------------------------------------------
-| <kbd>GET /users</kbd>      | Recupera os usuários cadastrados, ver [response details](#get-user-detail)
-| <kbd>POST /users</kbd>     | Criar um usuário, ver [request details](#post-user-detail)
+| <kbd>POST /api/auth/registrar</kbd>      | Cria um novo usuário, ver [request details](#post-user-register)
+| <kbd>POST /api/auth/login</kbd>     | Autentica um usuário, ver [request details](#post-user-login)
 
 
-<h3 id="get-user-detail">GET /users</h3>
-
-**RESPONSE**
-```json
-[
-    {
-        "id": 1,
-        "nome": "Felipe",
-        "sobrenome": "calumbi",
-        "documento": "999.999.999-99",
-        "email": "felipe@gmail.com",
-        "senha": "123456",
-        "saldo": 100,
-        "tipo": "COMUN"
-    }
-]
-```
-
-
-<h3 id="post-user-detail">POST /users</h3>
+<h3 id="get-user-register">POST /registrar</h3>
 
 **REQUEST**
 ```json
 {
     "nome": "Matheus",
-    "sobrenome": "calumbi",
-    "documento": "999.999.999-99",
-    "email": "matheus@gmail.com",
-    "senha": "123456",
-    "saldo": 100,
-    "tipo": "COMUN"
+    "email": "matheus34@gmail.com",
+    "senha": "matheus123"
 }
 ```
 
 **RESPONSE**
 ```json
 {
-    "id": 2,
+    "nome": "Matheus"
+}
+```
+
+
+<h3 id="post-user-login">POST /login</h3>
+
+**REQUEST**
+```json
+{
+    "email": "matheus34@gmail.com",
+    "senha": "matheus123"
+}
+```
+
+**RESPONSE**
+```json
+{
     "nome": "Matheus",
-    "sobrenome": "calumbi",
-    "documento": "999.999.999-99",
-    "email": "matheus@gmail.com",
-    "senha": "123456",
-    "saldo": 100,
-    "tipo": "COMUN"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJsb2dpbi1hdXRoLWFwaSIsInN1YiI6InJhZmFlbGRlamVzdXNAZ21haWwuY29tIiwiZXhwIjoxNzU0NzU2Mzc4fQ.TzM7LGUj-VkbXRPq2g8uMR_IgkS9JwuK0iyTMNdeiX0"
 }
 ```
 
