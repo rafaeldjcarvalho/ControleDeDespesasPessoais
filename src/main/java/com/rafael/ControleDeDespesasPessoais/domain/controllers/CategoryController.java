@@ -41,9 +41,9 @@ public class CategoryController {
 		return ResponseEntity.ok(categoria);
 	}
 	
-	@DeleteMapping("/{id_categoria}/{id_usuario}")
-	public ResponseEntity<?> deletarCategoria(@PathVariable Long id_categoria, @PathVariable Long id_usuario) {
-		this.categoriaService.deletarCategoria(id_categoria, id_usuario);
+	@DeleteMapping()
+	public ResponseEntity<?> deletarCategoria(@RequestBody CategoryDTO dados) {
+		this.categoriaService.deletarCategoria(dados.id(), dados.id_usuario());
 		return ResponseEntity.noContent().build();
 	}
 
