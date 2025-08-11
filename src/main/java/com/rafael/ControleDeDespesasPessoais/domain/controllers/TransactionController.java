@@ -28,8 +28,8 @@ public class TransactionController {
 	@GetMapping
 	public ResponseEntity<List<TransactionDTO>> listarTodasTransacoes(
 			@RequestParam(required = true) Long id_usuario,
-			@RequestParam(required = false) int mes,
-			@RequestParam(required = false) int ano,
+			@RequestParam(required = false) Long mes,
+			@RequestParam(required = false) Long ano,
 			@RequestParam(required = false) Long id_categoria) {
 		List<TransactionDTO> lista = this.transactionService.listarTransacoes(id_usuario, mes, ano, id_categoria);
 		return ResponseEntity.ok(lista);
