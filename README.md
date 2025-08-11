@@ -193,6 +193,118 @@ Aqui está a lista das principais rotas da API e o que elas fazem.
 }
 ```
 
+- Módulo de Transações
+
+
+| route               | description                                          
+|----------------------|-----------------------------------------------------
+| <kbd>POST /api/transacoes</kbd>     | Criar nova transação, ver [request details](#post-transaction-detail)
+| <kbd>GET /api/transacoes?Id_usuario=1&mes=8&ano=2025&id_categoria=3</kbd>     | Recupera transações, ver [response details](#get-transaction-detail)
+| <kbd>GET /api/transacoes/{id_usuario}/{id_transaction}</kbd>     | Obtém os detalhes de uma transação específica, ver [response details](#get-transaction-specifies-detail)
+| <kbd>PUT /api/transacoes</kbd>     | Atualiza uma transação, ver [request details](#put-transaction-detail)
+| <kbd>DELETE /api/transacoes</kbd>     | Deleta uma transacao, ver [request details](#delete-transaction-detail)
+
+<h3 id="post-transaction-detail">POST /transacoes</h3>
+
+**REQUEST**
+```json
+{
+    "descricao": "Aifood",
+    "valor": 50,
+    "data": "2025-08-11",
+    "hora": "15:33",
+    "tipo": "DESPESA",
+    "id_categoria": 1,
+    "id_usuario": 1
+}
+```
+
+**RESPONSE**
+```json
+{
+    "id": 1,
+    "descricao": "Aifood",
+    "valor": 50,
+    "data": "2025-08-11",
+    "hora": "15:33:00",
+    "tipo": "DESPESA",
+    "id_categoria": 1,
+    "id_usuario": 1
+}
+```
+
+<h3 id="get-transaction-detail">GET /transacoes?Id_usuario=1&mes=8&ano=2025&id_categoria=1</h3>
+
+**RESPONSE**
+```json
+[
+    {
+        "id": 1,
+        "descricao": "Aifood",
+        "valor": 50.00,
+        "data": "2025-08-11",
+        "hora": "15:33:00",
+        "tipo": "DESPESA",
+        "id_categoria": 1,
+        "id_usuario": 1
+    }
+]
+```
+
+<h3 id="get-transaction-specifies-detail">GET /transacoes/{id_usuario}/{id_transaction}</h3>
+
+**RESPONSE**
+```json
+{
+    "id": 1,
+    "descricao": "Aifood",
+    "valor": 50.00,
+    "data": "2025-08-11",
+    "hora": "15:33:00",
+    "tipo": "DESPESA",
+    "id_categoria": 1,
+    "id_usuario": 1
+}
+```
+
+<h3 id="put-transaction-detail">PUT /transacoes</h3>
+
+**REQUEST**
+```json
+{
+    "descricao": "Restaurante",
+    "valor": 150.00,
+    "data": "2025-08-11",
+    "hora": "15:33:00",
+    "tipo": "DESPESA",
+    "id_categoria": 1,
+}
+```
+
+**RESPONSE**
+```json
+{
+    "id": 1,
+    "descricao": "Restaurante",
+    "valor": 150.00,
+    "data": "2025-08-11",
+    "hora": "15:33:00",
+    "tipo": "DESPESA",
+    "id_categoria": 1,
+    "id_usuario": 1
+}
+```
+
+<h3 id="delete-transaction-detail">DELETE /transacoes</h3>
+
+**REQUEST**
+```json
+{
+    "id": 1,
+    "id_usuario": 1
+}
+```
+
 Fluxo Resumido
 
 ```plaintext
