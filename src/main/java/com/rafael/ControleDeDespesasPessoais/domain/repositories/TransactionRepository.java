@@ -22,6 +22,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 	List<Transaction> findTransactionByUserFiltered(
 			@Param("usuario_id") Long usuario_id,
 			@Param("categoriaId") Long categoriaId,
-			@Param("mes") int mes,
-			@Param("ano") int ano);
+			@Param("mes") Long mes,
+			@Param("ano") Long ano);
 }
