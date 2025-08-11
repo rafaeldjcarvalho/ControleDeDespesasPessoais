@@ -44,10 +44,11 @@ public class TransactionService {
 		transacao.setUsuario(usuario);
 		
 		this.salvarTransacao(transacao);
-		return dados;
+		
+		return this.transactionMapper.toDTO(transacao);
 	}
 	
-	public List<TransactionDTO> listarTransacoes(Long id_usuario, int mes, int ano, Long id_categoria) {
+	public List<TransactionDTO> listarTransacoes(Long id_usuario, Long mes, Long ano, Long id_categoria) {
 		List<Transaction> lista = this.transactionRepository.findTransactionByUserFiltered(id_usuario, id_categoria, mes, ano);
 		return lista.stream()
 				.map(transactionMapper::toDTO)
