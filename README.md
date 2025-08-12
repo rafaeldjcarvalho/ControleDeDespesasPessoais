@@ -305,6 +305,36 @@ Aqui está a lista das principais rotas da API e o que elas fazem.
 }
 ```
 
+- Módulo de Dashboard
+
+
+| route               | description                                          
+|----------------------|-----------------------------------------------------
+| <kbd>GET /api/dashboard/summary?usuario_id=1&mes=8&ano=2025</kbd>      | Recebe um resumo financeiro, ver [response details](#get-dashboard-summary)
+
+
+
+<h3 id="get-dashboard-summary">GET /summary?usuario_id=1&mes=8&ano=2025</h3>
+
+**RESPONSE**
+```json
+{
+    "totalReceitas": 2000.00,
+    "totalDespesas": 1100.00,
+    "saldo": 900.00,
+    "despesasPorCategoria": [
+        {
+            "categoria": "Alimentacao",
+            "total": 100.00
+        },
+        {
+            "categoria": "Transporte",
+            "total": 1000.00
+        }
+    ]
+}
+```
+
 Fluxo Resumido
 
 ```plaintext
