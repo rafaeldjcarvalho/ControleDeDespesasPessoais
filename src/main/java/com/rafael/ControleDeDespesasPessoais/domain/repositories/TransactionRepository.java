@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.rafael.ControleDeDespesasPessoais.domain.dtos.ExpenseByCategoryDTO;
 import com.rafael.ControleDeDespesasPessoais.domain.entitys.Transaction;
+import com.rafael.ControleDeDespesasPessoais.domain.enums.TransactionType;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
@@ -30,16 +31,16 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 	@Query("SELECT SUM(t.valor) FROM Transaction t JOIN t.usuario u WHERE u.id = :usuario_id AND t.tipo = :tipo AND " + 
 			"MONTH(t.data) = :mes AND YEAR(t.data) = :ano")
     BigDecimal findTotalValueForType(@Param("usuario_id") Long usuario_id,
-    		@Param("tipo") String tipo,
+    		@Param("tipo") TransactionType tipo,
     		@Param("mes") Long mes, 
     		@Param("ano") Long ano);
 	
 	@Query("SELECT c.nome AS categoria, SUM(t.valor) AS total " +
-			"FROM Transaction t JOIN t.categoria c JOIN t.usuario u WHERE c.id = :categoria_id AND " + 
+			"FROM Transaction t JOIN t.categoria c JOIN t.usuario u WHERE t.tipo = :tipo AND " + 
 	        "u.id = :usuario_id AND MONTH(t.data) = :mes AND YEAR(t.data) = :ano " +
 	        "GROUP BY t.categoria")
 	List<ExpenseByCategoryDTO> findDespesasPorCategoria(
-			@Param("categoria_id") Long categoria_id,
+			@Param("tipo") TransactionType tipo,
 			@Param("usuario_id") Long usuario_id,
 			@Param("mes") Long mes, 
 			@Param("ano") Long ano);
