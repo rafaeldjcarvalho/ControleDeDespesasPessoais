@@ -20,10 +20,9 @@ public class FinancialSummaryController {
 	@GetMapping("/summary")
 	public ResponseEntity<FinancialSummary> resumoFinanceiro(
 			@RequestParam("usuario_id") Long usuario_id,
-			@RequestParam("categoria_id") Long categoria_id,
 			@RequestParam("mes") Long mes,
 			@RequestParam("ano") Long ano) {
-		FinancialSummary sumario = this.summaryService.getResumoFinanceiro(usuario_id, categoria_id, mes, ano);
+		FinancialSummary sumario = this.summaryService.getResumoFinanceiro(usuario_id, mes, ano);
 		return ResponseEntity.ok(sumario);
 	}
 }

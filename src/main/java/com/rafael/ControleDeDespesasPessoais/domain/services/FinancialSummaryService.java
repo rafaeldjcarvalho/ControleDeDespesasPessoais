@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.rafael.ControleDeDespesasPessoais.domain.dtos.ExpenseByCategoryDTO;
 import com.rafael.ControleDeDespesasPessoais.domain.dtos.FinancialSummary;
+import com.rafael.ControleDeDespesasPessoais.domain.enums.TransactionType;
 import com.rafael.ControleDeDespesasPessoais.domain.repositories.TransactionRepository;
 
 @Service
@@ -18,12 +19,11 @@ public class FinancialSummaryService {
 	
 	public FinancialSummary getResumoFinanceiro(
 			Long usuario_id,
-			Long categoria_id,
 			Long mes,
 			Long ano) {
-		BigDecimal totalReceitas = this.transactionRepository.findTotalValueForType(usuario_id, "RECEITA", mes, ano);
-		BigDecimal totalDespesas = this.transactionRepository.findTotalValueForType(usuario_id, "DESPESA", mes, ano);
-		List<ExpenseByCategoryDTO> despesaPorCategoria = this.transactionRepository.findDespesasPorCategoria(categoria_id, usuario_id, mes, ano);
+		BigDecimal totalReceitas = this.transactionRepository.findTotalValueForType(usuario_id, TransactionType.RECEITA, mes, ano);
+		BigDecimal totalDespesas = this.transactionRepository.findTotalValueForType(usuario_id, TransactionType.DESPESA, mes, ano);
+		List<ExpenseByCategoryDTO> despesaPorCategoria = this.transactionRepository.findDespesasPorCategoria(TransactionType.DESPESA, usuario_id, mes, ano);
 		
 		BigDecimal saldo = totalReceitas.subtract(totalDespesas);
 		
