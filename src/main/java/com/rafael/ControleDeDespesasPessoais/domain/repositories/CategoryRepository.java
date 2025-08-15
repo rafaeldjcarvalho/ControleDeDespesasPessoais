@@ -13,7 +13,7 @@ import com.rafael.ControleDeDespesasPessoais.domain.entitys.Category;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 	
-	Optional<String> findByNome(String nome);
+	Optional<Category> findByNome(String nome);
 	
 	@Query("SELECT c FROM Category c JOIN c.usuario u WHERE u.id = :usuario_id")
 	List<Category> findCategoriesByUser(@Param("usuario_id") Long usuario_id);
