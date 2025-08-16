@@ -56,7 +56,7 @@ public class TransactionService {
 	}
 	
 	public TransactionDTO listarTransacao(Long id_usuario, Long id_transacao) {
-		Transaction transacao = this.transactionRepository.findById(id_transacao).get();
+		Transaction transacao = this.transactionRepository.findById(id_transacao).orElseThrow(() -> new RuntimeException("Transaction not found"));
 		if(transacao.getUsuario().getId() != id_usuario) {
 			throw new RuntimeException("This transaction belongs to another user");
 		}
