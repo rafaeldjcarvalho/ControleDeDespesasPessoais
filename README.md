@@ -338,16 +338,18 @@ Aqui está a lista das principais rotas da API e o que elas fazem.
 Fluxo Resumido
 
 ```plaintext
-Usuário → TransactionController
-              |
-              |→ AuthorizedTransaction
-              |     ↳ AVAILABLE
-              |
-              |→ NotificationService
-              |     ↳ Remetente
-              |     ↳ Destinatário
-              |
-       ↳ Gera Transação, salva no banco
+Usuário → UserController
+            ↳ Registrar no sistema
+            ↳ Logar no sistema
+                |
+                |→  CategoryController
+                |      ↳ CRUD de categoria 
+                |
+                |→  TransactionController
+                |      ↳ CRUD de Transaction
+                |
+                |→  FinancialSummaryController
+                |      ↳ Recebe um resumo financeiro
 ```
 
 <h2 id="colab">🤝 Collaborators</h2>
