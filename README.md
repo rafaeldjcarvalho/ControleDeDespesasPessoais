@@ -127,9 +127,9 @@ Aqui está a lista das principais rotas da API e o que elas fazem.
 | route               | description                                          
 |----------------------|-----------------------------------------------------
 | <kbd>POST /api/categorias</kbd>     | Criar nova categoria, ver [request details](#post-category-detail)
-| <kbd>GET /api/categorias/{id_usuario}</kbd>     | Recupera as categorias, ver [response details](#get-category-detail)
+| <kbd>GET /api/categorias</kbd>     | Recupera as categorias, ver [response details](#get-category-detail)
 | <kbd>PUT /api/categorias/{id}</kbd>     | Atualiza uma categoria, ver [request details](#put-category-detail)
-| <kbd>DELETE /api/categorias</kbd>     | Deleta uma categoria, ver [request details](#delete-category-detail)
+| <kbd>DELETE /api/categorias/{id}</kbd>     | Deleta uma categoria
 
 <h3 id="post-category-detail">POST /categorias</h3>
 
@@ -142,7 +142,7 @@ Aqui está a lista das principais rotas da API e o que elas fazem.
 }
 ```
 
-<h3 id="get-category-detail">GET /categorias/{id_usuario}</h3>
+<h3 id="get-category-detail">GET /categorias</h3>
 
 **RESPONSE**
 ```json
@@ -179,16 +179,6 @@ Aqui está a lista das principais rotas da API e o que elas fazem.
     "id": 2,
     "nome": "Cinema",
     "descricao": "Filme e Pipoca",
-    "id_usuario": 1
-}
-```
-
-<h3 id="delete-category-detail">DELETE /categorias</h3>
-
-**REQUEST**
-```json
-{
-    "id": 2,
     "id_usuario": 1
 }
 ```
