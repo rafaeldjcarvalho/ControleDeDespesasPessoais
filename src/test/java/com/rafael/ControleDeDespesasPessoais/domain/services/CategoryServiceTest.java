@@ -77,7 +77,7 @@ public class CategoryServiceTest {
 		
 		when(categoryRepository.findById(1L)).thenReturn(Optional.of(new Category(1l, data.nome(), data.descricao(), new User(1l, "teste", "teste@gmail.com", "senha123"))));
 		
-		CategoryDTO result = this.categoryService.atualizarCategoria(1L, data);
+		CategoryDTO result = this.categoryService.atualizarCategoria(1L, "teste@gmail.com", data);
 		verify(categoryRepository, times(1)).save(any(Category.class));
 		assertThat(result.id()).isEqualTo(1l);
 	}
@@ -88,7 +88,7 @@ public class CategoryServiceTest {
 		CategoryDTO data = new CategoryDTO(1l, "Alimentacao", "ifood", 1l);
 		
 		Exception thrown = assertThrows(RuntimeException.class, () -> {
-			this.categoryService.atualizarCategoria(data.id(), data);
+			this.categoryService.atualizarCategoria(data.id(), "teste@gmail.com", data);
 		});
 		
 		assertEquals("Category not found", thrown.getMessage());
@@ -102,7 +102,7 @@ public class CategoryServiceTest {
 		when(categoryRepository.findById(1L)).thenReturn(Optional.of(new Category(1l, data.nome(), data.descricao(), new User(2l, "teste", "teste@gmail.com", "senha123"))));
 		
 		Exception thrown = assertThrows(RuntimeException.class, () -> {
-			this.categoryService.atualizarCategoria(data.id(), data);
+			this.categoryService.atualizarCategoria(data.id(), "teste3@gmail.com", data);
 		});
 		
 		assertEquals("This category belongs to another user", thrown.getMessage());
@@ -115,7 +115,7 @@ public class CategoryServiceTest {
 		
 		when(categoryRepository.findById(1L)).thenReturn(Optional.of(new Category(1l, data.nome(), data.descricao(), new User(1l, "teste", "teste@gmail.com", "senha123"))));
 		
-		this.categoryService.deletarCategoria(1l, data.id_usuario());
+		this.categoryService.deletarCategoria(1l, "teste@gmail.com");
 		
 		verify(categoryRepository, times(1)).findById(1l);
 		verify(categoryRepository, times(1)).delete(any(Category.class));
@@ -127,7 +127,7 @@ public class CategoryServiceTest {
 		CategoryDTO data = new CategoryDTO(1l, "Alimentacao", "ifood", 1l);
 		
 		Exception thrown = assertThrows(RuntimeException.class, () -> {
-			this.categoryService.deletarCategoria(data.id(), data.id_usuario());
+			this.categoryService.deletarCategoria(data.id(), "teste@gmail.com");
 		});
 		
 		assertEquals("Category not found", thrown.getMessage());
@@ -141,7 +141,7 @@ public class CategoryServiceTest {
 		when(categoryRepository.findById(1L)).thenReturn(Optional.of(new Category(1l, data.nome(), data.descricao(), new User(2l, "teste", "teste@gmail.com", "senha123"))));
 		
 		Exception thrown = assertThrows(RuntimeException.class, () -> {
-			this.categoryService.deletarCategoria(data.id(), data.id_usuario());
+			this.categoryService.deletarCategoria(data.id(), "teste3@gmail.com");
 		});
 		
 		assertEquals("This category belongs to another user", thrown.getMessage());
