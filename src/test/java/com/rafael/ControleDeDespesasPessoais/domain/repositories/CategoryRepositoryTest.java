@@ -76,7 +76,7 @@ public class CategoryRepositoryTest {
 		this.createCategory(new CategoryDTO(null, "Transporte", "carro", user.getId()));
 		this.createCategory(new CategoryDTO(null, "Alimentacao", "ifood", user.getId()));
 		
-		List<Category> lista = this.categoryRepository.findCategoriesByUser(user.getId());
+		List<Category> lista = this.categoryRepository.findCategoriesByUser(user.getEmail());
 		
 		assertThat(lista.size()).isEqualTo(2);
 	}
@@ -84,7 +84,7 @@ public class CategoryRepositoryTest {
 	@Test
 	@DisplayName("Nao deve receber uma lista de categoria do BD, quando o id do usuario nao existe")
 	void findCategoriesByUserCase2() {
-		List<Category> lista = this.categoryRepository.findCategoriesByUser(1l);
+		List<Category> lista = this.categoryRepository.findCategoriesByUser("teste@gmail.com");
 		
 		assertThat(lista.isEmpty()).isTrue();
 	}
