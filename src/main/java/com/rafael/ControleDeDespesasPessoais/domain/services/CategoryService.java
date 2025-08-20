@@ -36,15 +36,15 @@ public class CategoryService {
 		this.salvarCategoria(novaCategoria);
 	}
 	
-	public List<CategoryDTO> listarCategoriaDoUsuario(Long usuario_id) {
-		return this.categoryRepository.findCategoriesByUser(usuario_id)
+	public List<CategoryDTO> listarCategoriaDoUsuario(String usuarioEmail) {
+		return this.categoryRepository.findCategoriesByUser(usuarioEmail)
 				.stream()
 				.map(categoryMapper::toDTO)
 				.collect(Collectors.toList());
 	}
 	
-	public CategoryDTO atualizarCategoria(Long id_categoria, CategoryDTO dados) {
-		Category categoria = verificarCategoria(id_categoria, dados.id_usuario());
+	public CategoryDTO atualizarCategoria(Long id_categoria, String usuarioEmail, CategoryDTO dados) {
+		Category categoria = verificarCategoria(id_categoria, usuarioEmail);
 		
 		categoria.setNome(dados.nome());
 		categoria.setDescricao(dados.descricao());
@@ -57,15 +57,15 @@ public class CategoryService {
 		this.categoryRepository.save(categoria);
 	}
 	
-	public void deletarCategoria(Long id_categoria, Long id_usuario) {
-		Category categoria = verificarCategoria(id_categoria, id_usuario);
+	public void deletarCategoria(Long id_categoria, String usuarioEmail) {
+		Category categoria = verificarCategoria(id_categoria, usuarioEmail);
 		this.categoryRepository.delete(categoria);
 	}
 	
-	private Category verificarCategoria(Long id_categoria, Long id_usuario) {
+	private Category verificarCategoria(Long id_categoria, String usuarioEmail) {
 		Category categoria = this.categoryRepository.findById(id_categoria).orElseThrow(() -> new RuntimeException("Category not found"));
 		
-		if(id_usuario != categoria.getUsuario().getId()) {
+		if(usuarioEmail != categoria.getUsuario().getEmail()) {
 			throw new RuntimeException("This category belongs to another user");
 		}
 		
