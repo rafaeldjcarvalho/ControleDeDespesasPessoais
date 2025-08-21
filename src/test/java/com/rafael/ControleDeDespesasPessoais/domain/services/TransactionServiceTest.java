@@ -106,7 +106,7 @@ public class TransactionServiceTest {
 		Category category = new Category(1l, "Lazer", "viajens", new User());
 		when(transactionRepository.findById(1l)).thenReturn(Optional.of(new Transaction(1l, "viajem", new BigDecimal(200), LocalDate.now(), LocalTime.now(), TransactionType.DESPESA, category, user)));
 		
-		this.transactionService.listarTransacao(1l, 1l);
+		this.transactionService.listarTransacao(user.getEmail(), 1l);
 		
 		verify(transactionRepository, times(1)).findById(1l);
 		verify(transactionMapper, times(1)).toDTO(any(Transaction.class));
@@ -120,7 +120,7 @@ public class TransactionServiceTest {
 		when(transactionRepository.findById(1l)).thenReturn(Optional.of(new Transaction(1l, "viajem", new BigDecimal(200), LocalDate.now(), LocalTime.now(), TransactionType.DESPESA, category, user)));
 		
 		Exception thrown = assertThrows(RuntimeException.class, () -> {
-			this.transactionService.listarTransacao(2l, 1l);
+			this.transactionService.listarTransacao("teste32@gmail.com", 1l);
 		});
 		
 		assertEquals("This transaction belongs to another user", thrown.getMessage());
@@ -130,7 +130,7 @@ public class TransactionServiceTest {
 	@DisplayName("Deve lançar um RuntimeException, quando a transacao nao existe")
 	void listarTransacaoCase3() {
 		Exception thrown = assertThrows(RuntimeException.class, () -> {
-			this.transactionService.listarTransacao(2l, 1l);
+			this.transactionService.listarTransacao("teste29@gmail.com", 1l);
 		});
 		
 		assertEquals("Transaction not found", thrown.getMessage());
@@ -147,7 +147,7 @@ public class TransactionServiceTest {
 		when(userRepository.findById(1l)).thenReturn(Optional.of(user));
 		when(categoryRepository.findById(1l)).thenReturn(Optional.of(category));
 		
-		this.transactionService.atualizarTransacao(data);
+		this.transactionService.atualizarTransacao(1l, data);
 		
 		verify(transactionRepository, times(1)).findById(1l);
 		verify(transactionRepository, times(1)).save(any(Transaction.class));
@@ -164,7 +164,7 @@ public class TransactionServiceTest {
 		when(transactionRepository.findById(1l)).thenReturn(Optional.of(new Transaction(1l, "viajem", new BigDecimal(200), LocalDate.now(), LocalTime.now(), TransactionType.DESPESA, category, user)));
 		
 		Exception thrown = assertThrows(RuntimeException.class, () -> {
-			this.transactionService.atualizarTransacao(data);
+			this.transactionService.atualizarTransacao(1l, data);
 		});
 		
 		assertEquals("This transaction belongs to another user", thrown.getMessage());
@@ -175,7 +175,7 @@ public class TransactionServiceTest {
 	void atualizarTransacaoCase3() {
 		TransactionDTO data = new TransactionDTO(1l, "viajem 2", new BigDecimal(100), LocalDate.now(), LocalTime.now(), TransactionType.DESPESA, 1l, 2l);
 		Exception thrown = assertThrows(RuntimeException.class, () -> {
-			this.transactionService.atualizarTransacao(data);
+			this.transactionService.atualizarTransacao(1l, data);
 		});
 		
 		assertEquals("Transaction not found", thrown.getMessage());
@@ -187,10 +187,10 @@ public class TransactionServiceTest {
 		User user = new User(1l, "teste", "teste@gmail.com", "senha123");
 		Category category = new Category(1l, "Lazer", "viajens", new User());
 	
-		TransactionDTO data = new TransactionDTO(1l, "viajem 2", new BigDecimal(100), LocalDate.now(), LocalTime.now(), TransactionType.DESPESA, 1l, 1l);
+		//TransactionDTO data = new TransactionDTO(1l, "viajem 2", new BigDecimal(100), LocalDate.now(), LocalTime.now(), TransactionType.DESPESA, 1l, 1l);
 		when(transactionRepository.findById(1l)).thenReturn(Optional.of(new Transaction(1l, "viajem", new BigDecimal(200), LocalDate.now(), LocalTime.now(), TransactionType.DESPESA, category, user)));
 		
-		this.transactionService.deletarTransacao(data);
+		this.transactionService.deletarTransacao(1l, user.getEmail());
 		
 		verify(transactionRepository, times(1)).findById(1l);
 		verify(transactionRepository, times(1)).delete(any(Transaction.class));
@@ -201,7 +201,7 @@ public class TransactionServiceTest {
 	void deletarTransacaoCase2() {
 		TransactionDTO data = new TransactionDTO(1l, "viajem 2", new BigDecimal(100), LocalDate.now(), LocalTime.now(), TransactionType.DESPESA, 1l, 2l);
 		Exception thrown = assertThrows(RuntimeException.class, () -> {
-			this.transactionService.deletarTransacao(data);
+			this.transactionService.deletarTransacao(data.id(), "teste22@gmail.com");
 		});
 		
 		assertEquals("Transaction not found", thrown.getMessage());
@@ -217,7 +217,7 @@ public class TransactionServiceTest {
 		when(transactionRepository.findById(1l)).thenReturn(Optional.of(new Transaction(1l, "viajem", new BigDecimal(200), LocalDate.now(), LocalTime.now(), TransactionType.DESPESA, category, user)));
 		
 		Exception thrown = assertThrows(RuntimeException.class, () -> {
-			this.transactionService.deletarTransacao(data);
+			this.transactionService.deletarTransacao(data.id(), "teste22@gmail.com");
 		});
 		
 		assertEquals("This transaction belongs to another user", thrown.getMessage());
