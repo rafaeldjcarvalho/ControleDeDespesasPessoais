@@ -18,12 +18,12 @@ public class FinancialSummaryService {
 	private TransactionRepository transactionRepository;
 	
 	public FinancialSummary getResumoFinanceiro(
-			Long usuario_id,
+			String usuarioEmail,
 			Long mes,
 			Long ano) {
-		BigDecimal totalReceitas = this.transactionRepository.findTotalValueForType(usuario_id, TransactionType.RECEITA, mes, ano);
-		BigDecimal totalDespesas = this.transactionRepository.findTotalValueForType(usuario_id, TransactionType.DESPESA, mes, ano);
-		List<ExpenseByCategoryDTO> despesaPorCategoria = this.transactionRepository.findDespesasPorCategoria(TransactionType.DESPESA, usuario_id, mes, ano);
+		BigDecimal totalReceitas = this.transactionRepository.findTotalValueForType(usuarioEmail, TransactionType.RECEITA, mes, ano);
+		BigDecimal totalDespesas = this.transactionRepository.findTotalValueForType(usuarioEmail, TransactionType.DESPESA, mes, ano);
+		List<ExpenseByCategoryDTO> despesaPorCategoria = this.transactionRepository.findDespesasPorCategoria(TransactionType.DESPESA, usuarioEmail, mes, ano);
 		
 		BigDecimal saldo = totalReceitas.subtract(totalDespesas);
 		
