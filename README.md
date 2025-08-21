@@ -189,10 +189,10 @@ Aqui está a lista das principais rotas da API e o que elas fazem.
 | route               | description                                          
 |----------------------|-----------------------------------------------------
 | <kbd>POST /api/transacoes</kbd>     | Criar nova transação, ver [request details](#post-transaction-detail)
-| <kbd>GET /api/transacoes?Id_usuario=1&mes=8&ano=2025&id_categoria=3</kbd>     | Recupera transações, ver [response details](#get-transaction-detail)
-| <kbd>GET /api/transacoes/{id_usuario}/{id_transaction}</kbd>     | Obtém os detalhes de uma transação específica, ver [response details](#get-transaction-specifies-detail)
-| <kbd>PUT /api/transacoes</kbd>     | Atualiza uma transação, ver [request details](#put-transaction-detail)
-| <kbd>DELETE /api/transacoes</kbd>     | Deleta uma transacao, ver [request details](#delete-transaction-detail)
+| <kbd>GET /api/transacoes?mes=8&ano=2025&id_categoria=3</kbd>     | Recupera transações, ver [response details](#get-transaction-detail)
+| <kbd>GET /api/transacoes/{id_transaction}</kbd>     | Obtém os detalhes de uma transação específica, ver [response details](#get-transaction-specifies-detail)
+| <kbd>PUT /api/transacoes/{id_transaction}</kbd>     | Atualiza uma transação, ver [request details](#put-transaction-detail)
+| <kbd>DELETE /api/transacoes/{id_transaction}</kbd>     | Deleta uma transacao
 
 <h3 id="post-transaction-detail">POST /transacoes</h3>
 
@@ -223,7 +223,7 @@ Aqui está a lista das principais rotas da API e o que elas fazem.
 }
 ```
 
-<h3 id="get-transaction-detail">GET /transacoes?Id_usuario=1&mes=8&ano=2025&id_categoria=1</h3>
+<h3 id="get-transaction-detail">GET /transacoes?mes=8&ano=2025&id_categoria=1</h3>
 
 **RESPONSE**
 ```json
@@ -241,7 +241,7 @@ Aqui está a lista das principais rotas da API e o que elas fazem.
 ]
 ```
 
-<h3 id="get-transaction-specifies-detail">GET /transacoes/{id_usuario}/{id_transaction}</h3>
+<h3 id="get-transaction-specifies-detail">GET /transacoes/{id_transaction}</h3>
 
 **RESPONSE**
 ```json
@@ -257,7 +257,7 @@ Aqui está a lista das principais rotas da API e o que elas fazem.
 }
 ```
 
-<h3 id="put-transaction-detail">PUT /transacoes</h3>
+<h3 id="put-transaction-detail">PUT /transacoes/{id_transaction}</h3>
 
 **REQUEST**
 ```json
@@ -285,26 +285,16 @@ Aqui está a lista das principais rotas da API e o que elas fazem.
 }
 ```
 
-<h3 id="delete-transaction-detail">DELETE /transacoes</h3>
-
-**REQUEST**
-```json
-{
-    "id": 1,
-    "id_usuario": 1
-}
-```
-
 - Módulo de Dashboard
 
 
 | route               | description                                          
 |----------------------|-----------------------------------------------------
-| <kbd>GET /api/dashboard/summary?usuario_id=1&mes=8&ano=2025</kbd>      | Recebe um resumo financeiro, ver [response details](#get-dashboard-summary)
+| <kbd>GET /api/dashboard/summary?mes=8&ano=2025</kbd>      | Recebe um resumo financeiro, ver [response details](#get-dashboard-summary)
 
 
 
-<h3 id="get-dashboard-summary">GET /summary?usuario_id=1&mes=8&ano=2025</h3>
+<h3 id="get-dashboard-summary">GET /summary?&mes=8&ano=2025</h3>
 
 **RESPONSE**
 ```json
