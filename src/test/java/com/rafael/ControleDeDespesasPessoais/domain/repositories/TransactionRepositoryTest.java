@@ -78,7 +78,7 @@ public class TransactionRepositoryTest {
 		this.createTransaction(new TransactionDTO(null, "Viajem", new BigDecimal(200), LocalDate.now(), LocalTime.now(), TransactionType.DESPESA, category.getId(), user.getId()));
 		this.createTransaction(new TransactionDTO(null, "Hamburguer", new BigDecimal(100), LocalDate.now(), LocalTime.now(), TransactionType.DESPESA, category2.getId(), user.getId()));
 		
-		List<Transaction> result = this.transactionRepository.findTransactionByUser(user.getId());
+		List<Transaction> result = this.transactionRepository.findTransactionByUser(user.getEmail());
 		
 		assertThat(result.size()).isEqualTo(2);
 	}
@@ -86,7 +86,7 @@ public class TransactionRepositoryTest {
 	@Test
 	@DisplayName("Nao deve receber uma lista de transacao do BD, quando o usuario nao existe")
 	void findTransactionByUserCase2() {
-		List<Transaction> result = this.transactionRepository.findTransactionByUser(4l);
+		List<Transaction> result = this.transactionRepository.findTransactionByUser("teste32@gmail.com");
 		
 		assertThat(result.isEmpty()).isTrue();
 	}
@@ -100,7 +100,7 @@ public class TransactionRepositoryTest {
 		this.createTransaction(new TransactionDTO(null, "Viajem", new BigDecimal(200), LocalDate.now(), LocalTime.now(), TransactionType.DESPESA, category.getId(), user.getId()));
 		this.createTransaction(new TransactionDTO(null, "Hamburguer", new BigDecimal(100), LocalDate.now(), LocalTime.now(), TransactionType.DESPESA, category2.getId(), user.getId()));
 		
-		List<Transaction> result = this.transactionRepository.findTransactionByUserFiltered(user.getId(), null, null, null);
+		List<Transaction> result = this.transactionRepository.findTransactionByUserFiltered(user.getEmail(), null, null, null);
 		
 		assertThat(result.size()).isEqualTo(2);
 	}
@@ -108,7 +108,7 @@ public class TransactionRepositoryTest {
 	@Test
 	@DisplayName("Nao deve receber uma lista de transacao do BD, quando o usuario nao existe mesmo sem filtros")
 	void findTransactionByUserFilteredCase2() {
-		List<Transaction> result = this.transactionRepository.findTransactionByUserFiltered(10l, null, null, null);
+		List<Transaction> result = this.transactionRepository.findTransactionByUserFiltered("teste52@gmail.com", null, null, null);
 		
 		assertThat(result.isEmpty()).isTrue();
 	}
@@ -121,7 +121,7 @@ public class TransactionRepositoryTest {
 		this.createTransaction(new TransactionDTO(null, "Viajem 1", new BigDecimal(200), LocalDate.now(), LocalTime.now(), TransactionType.DESPESA, category.getId(), user.getId()));
 		this.createTransaction(new TransactionDTO(null, "Viajem 2", new BigDecimal(100), LocalDate.now(), LocalTime.now(), TransactionType.DESPESA, category.getId(), user.getId()));
 		
-		List<Transaction> result = this.transactionRepository.findTransactionByUserFiltered(user.getId(), category.getId(), 8l, 2025l);
+		List<Transaction> result = this.transactionRepository.findTransactionByUserFiltered(user.getEmail(), category.getId(), 8l, 2025l);
 		
 		assertThat(result.size()).isEqualTo(2);
 	}
@@ -131,7 +131,7 @@ public class TransactionRepositoryTest {
 	void findTransactionByUserFilteredCase4() {
 		User user = this.createUser(new RegisterDTO("teste", "test@gmail.com", "senha123"));
 		
-		List<Transaction> result = this.transactionRepository.findTransactionByUserFiltered(user.getId(), 4l, 8l, 2025l);
+		List<Transaction> result = this.transactionRepository.findTransactionByUserFiltered(user.getEmail(), 4l, 8l, 2025l);
 		
 		assertThat(result.isEmpty()).isTrue();
 	}
@@ -144,7 +144,7 @@ public class TransactionRepositoryTest {
 		this.createTransaction(new TransactionDTO(null, "Viajem 1", new BigDecimal(200), LocalDate.now(), LocalTime.now(), TransactionType.DESPESA, category.getId(), user.getId()));
 		this.createTransaction(new TransactionDTO(null, "Viajem 2", new BigDecimal(100), LocalDate.now(), LocalTime.now(), TransactionType.DESPESA, category.getId(), user.getId()));
 		
-		BigDecimal result = this.transactionRepository.findTotalValueForType(user.getId(), TransactionType.DESPESA, 8l, 2025l);
+		BigDecimal result = this.transactionRepository.findTotalValueForType(user.getEmail(), TransactionType.DESPESA, 8l, 2025l);
 		
 		assertThat(result).isEqualByComparingTo(new BigDecimal(300));
 	}
@@ -152,7 +152,7 @@ public class TransactionRepositoryTest {
 	@Test
 	@DisplayName("Nao deve receber um valor total pelo tipo do BD, quando o usuario nao existe")
 	void findTotalValueForTypeCase2() {
-		BigDecimal result = this.transactionRepository.findTotalValueForType(3l, TransactionType.DESPESA, 8l, 2025l);
+		BigDecimal result = this.transactionRepository.findTotalValueForType("teste76@gmail.com", TransactionType.DESPESA, 8l, 2025l);
 		
 		assertThat(result).isNull();
 	}
@@ -165,7 +165,7 @@ public class TransactionRepositoryTest {
 		this.createTransaction(new TransactionDTO(null, "Viajem 1", new BigDecimal(200), LocalDate.now(), LocalTime.now(), TransactionType.DESPESA, category.getId(), user.getId()));
 		this.createTransaction(new TransactionDTO(null, "Viajem 2", new BigDecimal(100), LocalDate.now(), LocalTime.now(), TransactionType.DESPESA, category.getId(), user.getId()));
 		
-		BigDecimal result = this.transactionRepository.findTotalValueForType(user.getId(), TransactionType.RECEITA, 8l, 2025l);
+		BigDecimal result = this.transactionRepository.findTotalValueForType(user.getEmail(), TransactionType.RECEITA, 8l, 2025l);
 		
 		assertThat(result).isNull();
 	}
@@ -179,7 +179,7 @@ public class TransactionRepositoryTest {
 		this.createTransaction(new TransactionDTO(null, "Viajem 1", new BigDecimal(200), LocalDate.now(), LocalTime.now(), TransactionType.DESPESA, category.getId(), user.getId()));
 		this.createTransaction(new TransactionDTO(null, "Comida", new BigDecimal(100), LocalDate.now(), LocalTime.now(), TransactionType.DESPESA, category2.getId(), user.getId()));
 		
-		List<ExpenseByCategoryDTO> result = this.transactionRepository.findDespesasPorCategoria(TransactionType.DESPESA, user.getId(), 8l, 2025l);
+		List<ExpenseByCategoryDTO> result = this.transactionRepository.findDespesasPorCategoria(TransactionType.DESPESA, user.getEmail(), 8l, 2025l);
 		
 		assertThat(result.size()).isEqualTo(2);
 	}
@@ -189,7 +189,7 @@ public class TransactionRepositoryTest {
 	void findDespesasPorCategoriaCase2() {
 		User user = this.createUser(new RegisterDTO("teste", "test@gmail.com", "senha123"));
 		
-		List<ExpenseByCategoryDTO> result = this.transactionRepository.findDespesasPorCategoria(TransactionType.DESPESA, user.getId(), 8l, 2025l);
+		List<ExpenseByCategoryDTO> result = this.transactionRepository.findDespesasPorCategoria(TransactionType.DESPESA, user.getEmail(), 8l, 2025l);
 		
 		assertThat(result.isEmpty()).isTrue();
 	}
@@ -197,7 +197,7 @@ public class TransactionRepositoryTest {
 	@Test
 	@DisplayName("Nao deve receber uma lista de despesa por categoria do BD, quando o usuario nao existe")
 	void findDespesasPorCategoriaCase3() {
-		List<ExpenseByCategoryDTO> result = this.transactionRepository.findDespesasPorCategoria(TransactionType.DESPESA, 70l, 8l, 2025l);
+		List<ExpenseByCategoryDTO> result = this.transactionRepository.findDespesasPorCategoria(TransactionType.DESPESA, "teste70@gmail.com", 8l, 2025l);
 		
 		assertThat(result.isEmpty()).isTrue();
 	}
