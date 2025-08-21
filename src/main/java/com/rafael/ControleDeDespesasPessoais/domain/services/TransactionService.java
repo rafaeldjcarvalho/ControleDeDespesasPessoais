@@ -48,23 +48,23 @@ public class TransactionService {
 		return this.transactionMapper.toDTO(transacao);
 	}
 	
-	public List<TransactionDTO> listarTransacoes(Long id_usuario, Long mes, Long ano, Long id_categoria) {
-		List<Transaction> lista = this.transactionRepository.findTransactionByUserFiltered(id_usuario, id_categoria, mes, ano);
+	public List<TransactionDTO> listarTransacoes(String usuarioEmail, Long mes, Long ano, Long id_categoria) {
+		List<Transaction> lista = this.transactionRepository.findTransactionByUserFiltered(usuarioEmail, id_categoria, mes, ano);
 		return lista.stream()
 				.map(transactionMapper::toDTO)
 				.collect(Collectors.toList());
 	}
 	
-	public TransactionDTO listarTransacao(Long id_usuario, Long id_transacao) {
+	public TransactionDTO listarTransacao(String usuarioEmail, Long id_transacao) {
 		Transaction transacao = this.transactionRepository.findById(id_transacao).orElseThrow(() -> new RuntimeException("Transaction not found"));
-		if(transacao.getUsuario().getId() != id_usuario) {
+		if(transacao.getUsuario().getEmail() != usuarioEmail) {
 			throw new RuntimeException("This transaction belongs to another user");
 		}
 		return this.transactionMapper.toDTO(transacao); 
 	}
 	
-	public TransactionDTO atualizarTransacao(TransactionDTO novosDados) {
-		Transaction transacao = this.transactionRepository.findById(novosDados.id()).orElseThrow(() -> new RuntimeException("Transaction not found"));
+	public TransactionDTO atualizarTransacao(Long id_transacao, TransactionDTO novosDados) {
+		Transaction transacao = this.transactionRepository.findById(id_transacao).orElseThrow(() -> new RuntimeException("Transaction not found"));
 		if (transacao.getUsuario().getId() != novosDados.id_usuario()) {
 			throw new RuntimeException("This transaction belongs to another user");
 		}
@@ -81,9 +81,9 @@ public class TransactionService {
 		return this.transactionMapper.toDTO(transacao);
 	}
 	
-	public void deletarTransacao(TransactionDTO dados) {
-		Transaction transacao = this.transactionRepository.findById(dados.id()).orElseThrow(() -> new RuntimeException("Transaction not found"));
-		if (transacao.getUsuario().getId() != dados.id_usuario()) {
+	public void deletarTransacao(Long id_transacao, String usuarioEmail) {
+		Transaction transacao = this.transactionRepository.findById(id_transacao).orElseThrow(() -> new RuntimeException("Transaction not found"));
+		if (transacao.getUsuario().getEmail() != usuarioEmail) {
 			throw new RuntimeException("This transaction belongs to another user");
 		}
 		this.transactionRepository.delete(transacao);
