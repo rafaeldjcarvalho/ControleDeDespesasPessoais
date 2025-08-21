@@ -15,33 +15,33 @@ import com.rafael.ControleDeDespesasPessoais.domain.enums.TransactionType;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 	
-	@Query("SELECT t FROM Transaction t JOIN t.usuario u WHERE u.id = :usuario_id")
-	List<Transaction> findTransactionByUser(@Param("usuario_id") Long usuario_id);
+	@Query("SELECT t FROM Transaction t JOIN t.usuario u WHERE u.email = :usuarioEmail")
+	List<Transaction> findTransactionByUser(@Param("usuarioEmail") String usuarioEmail);
 	
-	@Query("SELECT t FROM Transaction t JOIN t.usuario u WHERE u.id = :usuario_id AND " +
+	@Query("SELECT t FROM Transaction t JOIN t.usuario u WHERE u.email = :usuarioEmail AND " +
 			"(:categoriaId IS NULL OR t.categoria.id = :categoriaId) AND " +
 			"(:mes IS NULL OR MONTH(t.data) = :mes) AND " +
 			"(:ano IS NULL OR YEAR(t.data) = :ano)")
 	List<Transaction> findTransactionByUserFiltered(
-			@Param("usuario_id") Long usuario_id,
+			@Param("usuarioEmail") String usuarioEmail,
 			@Param("categoriaId") Long categoriaId,
 			@Param("mes") Long mes,
 			@Param("ano") Long ano);
 	
-	@Query("SELECT SUM(t.valor) FROM Transaction t JOIN t.usuario u WHERE u.id = :usuario_id AND t.tipo = :tipo AND " + 
+	@Query("SELECT SUM(t.valor) FROM Transaction t JOIN t.usuario u WHERE u.email = :usuarioEmail AND t.tipo = :tipo AND " + 
 			"MONTH(t.data) = :mes AND YEAR(t.data) = :ano")
-    BigDecimal findTotalValueForType(@Param("usuario_id") Long usuario_id,
+    BigDecimal findTotalValueForType(@Param("usuarioEmail") String usuarioEmail,
     		@Param("tipo") TransactionType tipo,
     		@Param("mes") Long mes, 
     		@Param("ano") Long ano);
 	
 	@Query("SELECT c.nome AS categoria, SUM(t.valor) AS total " +
 			"FROM Transaction t JOIN t.categoria c JOIN t.usuario u WHERE t.tipo = :tipo AND " + 
-	        "u.id = :usuario_id AND MONTH(t.data) = :mes AND YEAR(t.data) = :ano " +
+	        "u.email = :usuarioEmail AND MONTH(t.data) = :mes AND YEAR(t.data) = :ano " +
 	        "GROUP BY t.categoria")
 	List<ExpenseByCategoryDTO> findDespesasPorCategoria(
 			@Param("tipo") TransactionType tipo,
-			@Param("usuario_id") Long usuario_id,
+			@Param("usuarioEmail") String usuarioEmail,
 			@Param("mes") Long mes, 
 			@Param("ano") Long ano);
 }
